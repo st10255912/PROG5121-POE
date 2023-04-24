@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Login {
     
-    public static void main(String[] args) {
+    public static void run() {
         
         String loginUsername = getLoginUsername();
         String loginPassword = getLoginPassword();
-        
-        boolean valid = loginUser(loginUsername, loginPassword);
+        int index = 0;
+        boolean valid = loginUser(loginUsername, loginPassword, index);
         
         String loginStatus = returnLoginStatus(valid);
         System.out.println(loginStatus);
@@ -35,10 +35,11 @@ public class Login {
         return loginPassword;
     }
     
-    public static boolean loginUser(String loginUsername, String loginPassword) {
+    public static boolean loginUser(String loginUsername, String loginPassword, int index) {
         
-        String username = "H_rt1";
-        String password = "H@rtslief1";
+        String username = UserCredentials.usernames[index];
+        String password = UserCredentials.passwords[index];
+
         while(!loginUsername.equals(username) && !loginPassword.equals(password)){
             return false;
         }

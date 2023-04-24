@@ -7,17 +7,22 @@ import java.util.Scanner;
 
 public class Registration {
     
-    public static void main(String[] args) {
-        String profile;
+    public static void run() {
+        String[] usernames = new String[10];
+        String[] passwords = new String[10];
+        int index = 0;
         
-        housekeeping();
-        String username = getUsername();
-        String password = getPassword();
-        String firstName = getFirstName();
-        String lastName = getLastName();
-        
-        registerUser(username, password, firstName, lastName);
- 
+        for (int i = 0; i < 1; i++) {
+            housekeeping();
+            String username = getUsername();
+            String password = getPassword();
+            String firstName = getFirstName();
+            String lastName = getLastName();
+
+            registerUser(username, password, firstName, lastName);
+            UserCredentials.usernames[index] = username;
+            UserCredentials.passwords[index] = password;
+        }
     } 
     
     public static void housekeeping() {
@@ -126,7 +131,8 @@ public class Registration {
                             + "\nFirst Name:. " + firstName
                             + "\nLast Name:.. " + lastName + "\n"
                             + "\nRegistration Successful!"
-                            + "\n=======================================");
+                            + "\n======================================="
+                            + "\n\n");
     }
 }
 
