@@ -2,41 +2,49 @@
 
 package progpoetaskone;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 
 public class Main {
+    
     public static void main(String[] args) {
-        Scanner kb = new Scanner(System.in);
-        
+        UserSelection();
+    }
+    
+    public static void UserSelection() {
         while(true){
-            System.out.println("1. Register");
-            System.out.println("2. Login");
-            System.out.println("3. Exit");
-            System.out.print("Enter your choice: ");
+            String choice = (JOptionPane.showInputDialog(null, "1. Register \n2. Login \n3. Exit \nEnter your choice: "));
             
-            int choice = kb.nextInt();
-
-            switch(choice){
+            if(choice == null) {
+                JOptionPane.showMessageDialog(null,"bye!");
+                System.exit(0);
+            }
+            else if(choice.trim().equals("")){
+                JOptionPane.showMessageDialog(null,"Invalid choice");
+                UserSelection();
+                break;
+            }
+            
+            int chosenNum = Integer.parseInt(choice);
+            
+            switch(chosenNum){
                 case 1:
-                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     Registration registration = new Registration();
                     registration.run();
-                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     break;
                 case 2:
-                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     Login login = new Login();
                     login.run();
-                    System.out.println("\n");
                     break;
                 case 3:
-                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                    System.out.println("Bye!");
+                    JOptionPane.showMessageDialog(null,"""
+                                                                  Thank you for using this program!
+                                                                ==============================
+                                                                             """);
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("\n");
-                    System.out.println("Invalid choice");
+                    JOptionPane.showMessageDialog(null,"Invalid choice");
                     break;
             }
         }

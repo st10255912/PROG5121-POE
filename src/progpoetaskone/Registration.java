@@ -2,31 +2,26 @@
 
 package progpoetaskone;
 
-import java.util.Scanner;
-
+import javax.swing.JOptionPane;
 
 public class Registration {
     
     public static void run() {
-        String[] usernames = new String[10];
-        String[] passwords = new String[10];
-        int index = 0;
         
-        for (int i = 0; i < 1; i++) {
-            housekeeping();
-            String username = getUsername();
-            String password = getPassword();
-            String firstName = getFirstName();
-            String lastName = getLastName();
+        housekeeping();
+        
+        String username = getUsername();
+        String password = getPassword();
+        JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
+        String firstName = getFirstName();
+        String lastName = getLastName();
 
-            registerUser(username, password, firstName, lastName);
-            UserCredentials.usernames[index] = username;
-            UserCredentials.passwords[index] = password;
-        }
+        registerUser(username, password, firstName, lastName);
+
     } 
     
     public static void housekeeping() {
-        System.out.println("""
+        JOptionPane.showMessageDialog(null, """
                            Welcome to PROG5121 Task 1 (ST10255912)
                            =======================================
                            Please follow the prompts to register a new account!
@@ -35,21 +30,30 @@ public class Registration {
     }
     
     public static String getUsername() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Username: ");
-        String username = kb.next();
+        String username = JOptionPane.showInputDialog(null, """
+                                                                                    Username must be: 
+                                                                                    -No longer than 5 characters and,
+                                                                                    -Must contain an underscore (_)
+
+                                                            
+                                                                                    Enter Username: """);
         
-        while (!checkUserName(username)) {
-            System.out.println("Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)");
+        while (!checkUserName(username) || username.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)");
             
             return getUsername();
             
         }
-        System.out.println("Username successfully captured!");
+        
         return username;
     }
     
     public static boolean checkUserName(String username) {
+        if (username == null) {
+            JOptionPane.showMessageDialog(null,"bye!");
+            System.exit(0);
+        }
+        
         while(!username.contains("_") || username.length() > 5)
         {
             return false;
@@ -58,27 +62,39 @@ public class Registration {
     }
     
     public static String getPassword() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Password: ");
-        String password = kb.next();
+        String password = JOptionPane.showInputDialog(null, """
+                                                                                    a password that contains the following:
+                                                                                    -At least 8 characters long.
+                                                                                    -At least one uppercase letter.
+                                                                                    -At least one lowercase letter.
+                                                                                    -At least one digit. 
+                                                                                    -At least 1 special character.   
+                                                            
+                                                  
+                                                                                    Enter password: """);
         
-        while (!checkPasswordComplexity(password)) {
-            System.out.println("""
-                               Invalid password.
-                               Please enter a password that contains the following:
-                               -At least 8 characters long.
-                               -At least one uppercase letter.
-                               -At least one lowercase letter.
-                               -At least one digit. 
-                               -At least 1 special character.""");
+        while (!checkPasswordComplexity(password) || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"""
+                                                                    Invalid password.
+                                                                    Please enter a password that contains the following:
+                                                                    -At least 8 characters long.
+                                                                    -At least one uppercase letter.
+                                                                    -At least one lowercase letter.
+                                                                    -At least one digit. 
+                                                                    -At least 1 special character.""");
             
             return getPassword();
         }
-        System.out.println("Password successfully captured!");
+        
         return password;
     }
     
     public static boolean checkPasswordComplexity(String password) {
+        if (password == null) {
+            JOptionPane.showMessageDialog(null,"bye!");
+            System.exit(0);
+        }
+        
         if(password.length() < 8) {
             return false;
         }
@@ -108,31 +124,37 @@ public class Registration {
     }
 
     public static String getFirstName() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter First Name:");
-        String firstName = kb.next();
+        String firstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
+        
+        if (firstName == null) {
+            JOptionPane.showMessageDialog(null,"bye!");
+            System.exit(0);
+        }
         
         return firstName;
     }
 
     public static String getLastName() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Last Name:");
-        String lastName = kb.next();
+        String lastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
+        
+        if (lastName == null) {
+            JOptionPane.showMessageDialog(null,"bye!");
+            System.exit(0);
+        }
         
         return lastName;
     }
     
     public static void registerUser(String username, String password, String firstName, String lastName) {
-        System.out.println("\nUsername is correctly formatted!\n"
+        JOptionPane.showMessageDialog(null, 
+                            "\nUsername is correctly formatted!\n"
                             + "Password meets complexity requirements!\n"
-                            + "Username:... " + username
-                            + "\nPassword:... " + password
-                            + "\nFirst Name:. " + firstName
-                            + "\nLast Name:.. " + lastName + "\n"
+                            + "Username:..... " + username
+                            + "\nPassword:..... " + password
+                            + "\nFirst Name:... " + firstName
+                            + "\nLast Name:.... " + lastName + "\n"
                             + "\nRegistration Successful!"
-                            + "\n======================================="
-                            + "\n\n");
+                            + "\n======================================="); 
     }
 }
 

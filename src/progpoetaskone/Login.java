@@ -2,44 +2,66 @@
 
 package progpoetaskone;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 
 public class Login {
     
     public static void run() {
         
+        housekeeping();
+        
         String loginUsername = getLoginUsername();
         String loginPassword = getLoginPassword();
-        int index = 0;
-        boolean valid = loginUser(loginUsername, loginPassword, index);
+        
+        boolean valid = loginUser(loginUsername, loginPassword);
         
         String loginStatus = returnLoginStatus(valid);
-        System.out.println(loginStatus);
+        JOptionPane.showMessageDialog(null,loginStatus);
         
     }  
     
+    public static void housekeeping() {
+        JOptionPane.showMessageDialog(null, """
+                                                                   Login Page
+                                                       ======================================
+                                                         Please follow the prompts to login!
+
+                                                                    """);
+    }
+    
     public static String getLoginUsername() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Username: ");
-        String loginUsername = kb.next();
+        String loginUsername = JOptionPane.showInputDialog(null, "Enter Username: ");
         
         return loginUsername;
     }
     
     public static String getLoginPassword() {
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Password: ");
-        String loginPassword = kb.next();
+        String loginPassword = JOptionPane.showInputDialog(null, "Enter Username: ");
         
         return loginPassword;
     }
     
-    public static boolean loginUser(String loginUsername, String loginPassword, int index) {
+    public static boolean loginUser(String loginUsername, String loginPassword) {
         
-        String username = UserCredentials.usernames[index];
-        String password = UserCredentials.passwords[index];
-
+        String username = "H_rt1";
+        String password = "H@rtslief1";
+        
+        /*
+        my best guess is to use a for loop like so:
+        
+        for(i=0 ; UserData ; i++) {
+            if(loginUsername.equals(username) && loginPassword.equals(password)){
+                return true;
+            }
+            return false;
+        }
+        
+        I would hope that it would search through the UserData class's parrallel array
+        and if the loginUsername and loginPassword match any username and password in
+        the array then it would return true.
+        
+        */
         while(!loginUsername.equals(username) && !loginPassword.equals(password)){
             return false;
         }
@@ -52,7 +74,8 @@ public class Login {
             if(valid == true){
                 loginStatus = "Successful Login!";
             }else 
-                loginStatus = "Unsuccessful Login!";
+                loginStatus = "Unsuccessful Login!\nPress '2' to try again!";
+                
         return loginStatus;
     }
 }
