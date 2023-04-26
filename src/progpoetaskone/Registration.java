@@ -17,6 +17,8 @@ public class Registration {
         String lastName = getLastName();
 
         registerUser(username, password, firstName, lastName);
+        
+        
 
     } 
     

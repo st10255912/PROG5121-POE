@@ -17,7 +17,7 @@ public class Login {
         boolean valid = loginUser(loginUsername, loginPassword);
         
         String loginStatus = returnLoginStatus(valid);
-        JOptionPane.showMessageDialog(null,loginStatus);
+        JOptionPane.showMessageDialog(null,loginStatus + "\nWelcome " + loginUsername);
         
     }  
     
@@ -37,7 +37,7 @@ public class Login {
     }
     
     public static String getLoginPassword() {
-        String loginPassword = JOptionPane.showInputDialog(null, "Enter Username: ");
+        String loginPassword = JOptionPane.showInputDialog(null, "Enter Password: ");
         
         return loginPassword;
     }
