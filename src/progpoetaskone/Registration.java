@@ -11,15 +11,15 @@ public class Registration {
     public static void run() {
         
         housekeeping();
-        
+        String fileName = "credentials.txt";
         String username = getUsername();
         String password = getPassword();
-        String fileName = "credentials.txt";
-        
+        String firstName = getFirstName();
+        String lastName = getLastName();
         
         try {
             FileWriter writer = new FileWriter(fileName, true);
-            writer.write(username + ":" + password + " \n");
+            writer.write(username + ":" + password + ":" + firstName + ":" + lastName);
             writer.close();
             JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
         } catch (IOException e) {
@@ -27,8 +27,7 @@ public class Registration {
             e.printStackTrace();
         }
         
-        String firstName = getFirstName();
-        String lastName = getLastName();
+        
         registerUser(username, password, firstName, lastName);
   }
 

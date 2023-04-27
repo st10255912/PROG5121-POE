@@ -15,7 +15,7 @@ public class Login {
         String loginUsername = getLoginUsername();
         String loginPassword = getLoginPassword();
         boolean valid = loginUser(loginUsername, loginPassword);
-        String loginStatus = returnLoginStatus(valid, loginUsername);
+        String loginStatus = returnLoginStatus(valid);
     }  
     
     public static void housekeeping() {
@@ -70,14 +70,34 @@ public class Login {
         return false;
     }
     
-    public static String returnLoginStatus(boolean valid, String loginUsername){
-        String loginStatus;
-            if(valid == true){
-                loginStatus = "Successful Login!";
-                JOptionPane.showMessageDialog(null,loginStatus + "\nWelcome " + loginUsername);
-            }else 
-                loginStatus = "Unsuccessful Login!\nPress '2' to try again!";
-                
+    public static String returnLoginStatus(boolean valid){
+        String fileName = "credentials.txt";
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                String firstName = parts[2];
+                String lastName = parts[3];
+                String loginStatus;
+                if(valid == true){
+                    loginStatus = "Successful Login!";
+                    JOptionPane.showMessageDialog(null,loginStatus + "\nWelcome " + firstName + " " + lastName);
+                }else 
+                    loginStatus = "Unsuccessful Login!\nPress '2' to try again!";
+            return loginStatus;
+            }
+            
+        reader.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }
         return loginStatus;
     }
-}
+
+        
+    
+
