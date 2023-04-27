@@ -2,6 +2,8 @@
 
 package progpoetaskone;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Registration {
@@ -12,15 +14,25 @@ public class Registration {
         
         String username = getUsername();
         String password = getPassword();
-        JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
+        String fileName = "credentials.txt";
+        
+        
+        try {
+            FileWriter writer = new FileWriter(fileName, true);
+            writer.write(username + ":" + password + " \n");
+            writer.close();
+            JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"An error occurred while appending to the file.");
+            e.printStackTrace();
+        }
+        
         String firstName = getFirstName();
         String lastName = getLastName();
-
         registerUser(username, password, firstName, lastName);
-        
-        
+  }
 
-    } 
+
     
     public static void housekeeping() {
         JOptionPane.showMessageDialog(null, """

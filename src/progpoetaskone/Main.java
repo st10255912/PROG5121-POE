@@ -8,27 +8,25 @@ import javax.swing.JOptionPane;
 public class Main {
     
     public static void main(String[] args) {
-        
         NumberFormatExceptionHandling();
-        
     }
-    
     
     public static void UserSelection() throws NumberFormatException{
         while(true){
-            String choice = (JOptionPane.showInputDialog(null, "1. Register \n2. Login \n3. Exit \nEnter your choice: "));
+            String choice = (JOptionPane.showInputDialog(null, "1: Register \n2: Login \nEsc: Exit \n\nEnter your choice: "));
            
             if(choice == null) {
-                JOptionPane.showMessageDialog(null,"Invalid choice");
-                UserSelection();
+                JOptionPane.showMessageDialog(null,"""
+                                                                  Thank you for using this program!
+                                                                ==============================
+                                                                             """);
+                System.exit(0);
             }
             else if(choice.trim().equals("")){
-                JOptionPane.showMessageDialog(null,"Invalid choice");
+                JOptionPane.showMessageDialog(null,"Invalid choice!\nPress 'Esc' to exit.");
                 UserSelection();
                 break;
             }
-            
-            
 
             int chosenNum = Integer.parseInt(choice);
             
@@ -40,13 +38,6 @@ public class Main {
                 case 2:
                     Login login = new Login();
                     login.run();
-                    break;
-                case 3:
-                    JOptionPane.showMessageDialog(null,"""
-                                                                  Thank you for using this program!
-                                                                ==============================
-                                                                             """);
-                    System.exit(0);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null,"Invalid choice");

@@ -2,28 +2,25 @@
 
 package progpoetaskone;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 
 public class Login {
     
     public static void run() {
-        
         housekeeping();
-        
         String loginUsername = getLoginUsername();
         String loginPassword = getLoginPassword();
-        
         boolean valid = loginUser(loginUsername, loginPassword);
-        
-        String loginStatus = returnLoginStatus(valid);
-        JOptionPane.showMessageDialog(null,loginStatus + "\nWelcome " + loginUsername);
-        
+        String loginStatus = returnLoginStatus(valid, loginUsername);
     }  
     
     public static void housekeeping() {
         JOptionPane.showMessageDialog(null, """
-                                                                   Login Page
+                                                                    Login Page
                                                        ======================================
                                                          Please follow the prompts to login!
 
@@ -32,47 +29,52 @@ public class Login {
     
     public static String getLoginUsername() {
         String loginUsername = JOptionPane.showInputDialog(null, "Enter Username: ");
-        
         return loginUsername;
     }
     
     public static String getLoginPassword() {
         String loginPassword = JOptionPane.showInputDialog(null, "Enter Password: ");
-        
         return loginPassword;
     }
     
     public static boolean loginUser(String loginUsername, String loginPassword) {
-        
-        String username = "H_rt1";
-        String password = "H@rtslief1";
-        
-        /*
-        my best guess is to use a for loop like so:
-        
-        for(i=0 ; UserData ; i++) {
-            if(loginUsername.equals(username) && loginPassword.equals(password)){
-                return true;
+        String fileName = "credentials.txt";
+        boolean valid = false;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+              String[] parts = line.split(":");
+              String username = parts[0];
+              String password = parts[1];
+
+                if (loginUsername.equals(username) && loginPassword.equals(password)) {
+                  valid = true;
+                  return true;
+                }
             }
-            return false;
+
+        reader.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
         }
-        
-        I would hope that it would search through the UserData class's parrallel array
-        and if the loginUsername and loginPassword match any username and password in
-        the array then it would return true.
-        
-        */
-        while(!loginUsername.equals(username) && !loginPassword.equals(password)){
-            return false;
+
+        if (valid) {
+            System.out.println("Username and password match.");
+        } else {
+            System.out.println("Username and password do not match.");
         }
-        return true;
-        
+        return false;
     }
     
-    public static String returnLoginStatus(boolean valid){
+    public static String returnLoginStatus(boolean valid, String loginUsername){
         String loginStatus;
             if(valid == true){
                 loginStatus = "Successful Login!";
+                JOptionPane.showMessageDialog(null,loginStatus + "\nWelcome " + loginUsername);
             }else 
                 loginStatus = "Unsuccessful Login!\nPress '2' to try again!";
                 
