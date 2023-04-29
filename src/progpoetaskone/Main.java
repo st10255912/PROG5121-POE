@@ -48,7 +48,7 @@ public class Main {
     
     public static void NumberFormatExceptionHandling(){
         try {
-           UserSelection();
+            UserSelection();
         } 
         catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,"Invalid choice");

@@ -16,18 +16,18 @@ public class Registration {
         String password = getPassword();
         String firstName = getFirstName();
         String lastName = getLastName();
-        
+
         try {
             FileWriter writer = new FileWriter(fileName, true);
-            writer.write(username + ":" + password + ":" + firstName + ":" + lastName);
+            writer.write(username + ":" + password + ":" + firstName + ":" + lastName + "\n");
             writer.close();
             JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null,"An error occurred while appending to the file.");
             e.printStackTrace();
         }
-        
-        
+
+
         registerUser(username, password, firstName, lastName);
   }
 
@@ -63,7 +63,7 @@ public class Registration {
     
     public static boolean checkUserName(String username) {
         if (username == null) {
-            JOptionPane.showMessageDialog(null,"bye!");
+            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
             System.exit(0);
         }
         
@@ -86,7 +86,7 @@ public class Registration {
                                                   
                                                                                     Enter password: """);
         
-        while (!checkPasswordComplexity(password) || password.isEmpty()) {
+        while(!checkPasswordComplexity(password) || password.isEmpty()) {
             JOptionPane.showMessageDialog(null,"""
                                                                     Invalid password.
                                                                     Please enter a password that contains the following:
@@ -104,7 +104,7 @@ public class Registration {
     
     public static boolean checkPasswordComplexity(String password) {
         if (password == null) {
-            JOptionPane.showMessageDialog(null,"bye!");
+            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
             System.exit(0);
         }
         
@@ -137,10 +137,11 @@ public class Registration {
     }
 
     public static String getFirstName() {
-        String firstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
-        
+        String userFirstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
+        String firstName = userFirstName.substring(0, 1).toUpperCase() + userFirstName.substring(1);
+        System.out.println(firstName);
         if (firstName == null) {
-            JOptionPane.showMessageDialog(null,"bye!");
+            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
             System.exit(0);
         }
         
@@ -148,10 +149,12 @@ public class Registration {
     }
 
     public static String getLastName() {
-        String lastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
+        String userLastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
+        String lastName = userLastName.substring(0, 1).toUpperCase() + userLastName.substring(1);
+        System.out.println(lastName);
         
         if (lastName == null) {
-            JOptionPane.showMessageDialog(null,"bye!");
+            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
             System.exit(0);
         }
         
