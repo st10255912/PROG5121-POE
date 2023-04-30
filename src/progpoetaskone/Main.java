@@ -8,10 +8,10 @@ import javax.swing.JOptionPane;
 public class Main {
     
     public static void main(String[] args) {
-        NumberFormatExceptionHandling();
+        UserSelection();
     }
     
-    public static void UserSelection() throws NumberFormatException{
+    public static void UserSelection() {
         while(true){
             String choice = (JOptionPane.showInputDialog(null, "1: Register \n2: Login \nEsc: Exit \n\nEnter your choice: "));
            
@@ -40,19 +40,9 @@ public class Main {
                     login.run();
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null,"Invalid choice");
+                    JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
                     break;
             }
-        }
-    }
-    
-    public static void NumberFormatExceptionHandling(){
-        try {
-            UserSelection();
-        } 
-        catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null,"Invalid choice");
-            UserSelection();
         }
     }
 }

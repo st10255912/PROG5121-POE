@@ -21,9 +21,8 @@ public class Registration {
             FileWriter writer = new FileWriter(fileName, true);
             writer.write(username + ":" + password + ":" + firstName + ":" + lastName + "\n");
             writer.close();
-            JOptionPane.showMessageDialog(null,"Username and Password successfully captured!");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null,"An error occurred while appending to the file.");
+            JOptionPane.showMessageDialog(null,"An error occurred while registering your profile");
             e.printStackTrace();
         }
 
@@ -43,27 +42,21 @@ public class Registration {
     }
     
     public static String getUsername() {
-        String username = JOptionPane.showInputDialog(null, """
-                                                                                    Username must be: 
-                                                                                    -No longer than 5 characters and,
-                                                                                    -Must contain an underscore (_)
+        String username = JOptionPane.showInputDialog(null, "Username must be:\n-No longer than 5 characters and,\n-Must contain an underscore (_)\n\n\nEnter Username:");
 
-                                                            
-                                                                                    Enter Username: """);
-        
-        while (!checkUserName(username) || username.isEmpty()) {
+        while (!checkUsername(username) || username.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)");
             
             return getUsername();
             
         }
-        
+        JOptionPane.showMessageDialog(null,"Username is correctly formatted!....\n\nUsername successfully captured!");
         return username;
     }
     
-    public static boolean checkUserName(String username) {
+    public static boolean checkUsername(String username) {
         if (username == null) {
-            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
+            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -75,36 +68,21 @@ public class Registration {
     }
     
     public static String getPassword() {
-        String password = JOptionPane.showInputDialog(null, """
-                                                                                    a password that contains the following:
-                                                                                    -At least 8 characters long.
-                                                                                    -At least one uppercase letter.
-                                                                                    -At least one lowercase letter.
-                                                                                    -At least one digit. 
-                                                                                    -At least 1 special character.   
-                                                            
-                                                  
-                                                                                    Enter password: """);
+        String password = JOptionPane.showInputDialog(null, "Please ensure that the password contains:\n -At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.\n\n\n Enter password:\n");
         
+                                                                                    
         while(!checkPasswordComplexity(password) || password.isEmpty()) {
-            JOptionPane.showMessageDialog(null,"""
-                                                                    Invalid password.
-                                                                    Please enter a password that contains the following:
-                                                                    -At least 8 characters long.
-                                                                    -At least one uppercase letter.
-                                                                    -At least one lowercase letter.
-                                                                    -At least one digit. 
-                                                                    -At least 1 special character.""");
-            
+            JOptionPane.showMessageDialog(null,"Invalid password.\nPlease enter a password that contains the following:\n-At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.");
+
             return getPassword();
         }
-        
+        JOptionPane.showMessageDialog(null,"Password meets complexity requirements!....\n\nPassword successfully captured!");
         return password;
     }
     
     public static boolean checkPasswordComplexity(String password) {
         if (password == null) {
-            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
+            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -135,42 +113,57 @@ public class Registration {
         
         return false;
     }
-
+    
     public static String getFirstName() {
-        String userFirstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
-        String firstName = userFirstName.substring(0, 1).toUpperCase() + userFirstName.substring(1);
-        System.out.println(firstName);
-        if (firstName == null) {
-            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
-            System.exit(0);
-        }
+        String firstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
         
+       
+            if(firstName == null) {
+                JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+                System.exit(0);
+            }
+            while(!checkFirstName(firstName)){
+                JOptionPane.showMessageDialog(null,"It looks like you left the previous option empty. Please Enter your first name again.");
+                return getFirstName();
+            }
+
         return firstName;
+    }
+    
+    public static boolean checkFirstName(String firstName){
+        if(firstName.length() < 1) {
+            return false;
+        }
+        return true;
     }
 
     public static String getLastName() {
-        String userLastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
-        String lastName = userLastName.substring(0, 1).toUpperCase() + userLastName.substring(1);
-        System.out.println(lastName);
+        String lastName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
         
-        if (lastName == null) {
-            JOptionPane.showMessageDialog(null,"Invalid! Try Again.");
-            System.exit(0);
-        }
-        
+       
+            if(lastName == null) {
+                JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+                System.exit(0);
+            }
+            while(!checkFirstName(lastName)){
+                JOptionPane.showMessageDialog(null,"It looks like you left the previous option empty. Please Enter your last name again.");
+                return getLastName();
+            }
+
         return lastName;
     }
     
+    public static boolean checkLastName(String lastName){
+        if(lastName.length() < 1) {
+            return false;
+        }
+        return true;
+    }
+    
     public static void registerUser(String username, String password, String firstName, String lastName) {
-        JOptionPane.showMessageDialog(null, 
-                            "\nUsername is correctly formatted!\n"
-                            + "Password meets complexity requirements!\n"
-                            + "Username:..... " + username
-                            + "\nPassword:..... " + password
-                            + "\nFirst Name:... " + firstName
-                            + "\nLast Name:.... " + lastName + "\n"
-                            + "\nRegistration Successful!"
-                            + "\n======================================="); 
+        JOptionPane.showMessageDialog(null, "Your Profile: \n\nUsername:..... " + username + "\nPassword:..... " + password + "\nFirst Name:... " + firstName + "\nLast Name:.... " + lastName + "\n\nRegistration Successful!\n======================================="); 
+                             
+                            
     }
 }
 
