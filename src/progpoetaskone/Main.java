@@ -16,10 +16,10 @@ public class Main {
             String choice = (JOptionPane.showInputDialog(null, "1: Register \n2: Login \nEsc: Exit \n\nEnter your choice: "));
            
             if(choice == null) {
-                JOptionPane.showMessageDialog(null,"""
-                                                                  Thank you for using this program!
-                                                                ==============================
-                                                                             """);
+                JOptionPane.showMessageDialog(null,"Thank you for using this program!\n==============================");
+                                                                  
+                                                                
+                                                                             
                 System.exit(0);
             }
             else if(choice.trim().equals("")){

@@ -20,16 +20,10 @@ public class Login {
         String loginLastName = getLoginLastName(loginUsername, loginPassword);
         boolean valid = loginUser(loginUsername, loginPassword);
         String returnLoginStatus = returnLoginStatus(valid, loginFirstName, loginLastName);
-
     }  
     
     public static void housekeeping() {
-        JOptionPane.showMessageDialog(null, """
-                                                                    Login Page
-                                                       ======================================
-                                                         Please follow the prompts to login!
-
-                                                                    """);
+        JOptionPane.showMessageDialog(null, "Login Page\n======================================\nPlease follow the prompts to login!");                                                                   
     }
     
     public static String getLoginUsername() {
@@ -102,12 +96,8 @@ public class Login {
             System.err.format("IOException: %s%n", e);
         }
 
-         return null;
+    return null;
     }
-    
-    
-    
-    
     
     public static boolean loginUser(String loginUsername, String loginPassword) {
         String fileName = "credentials.txt";
@@ -133,7 +123,7 @@ public class Login {
             System.out.println("An error occurred while reading the file.");
         }
 
-        return false;
+    return false;
     }
     
     public static String returnLoginStatus(boolean valid, String loginFirstName, String loginLastName){
@@ -148,9 +138,8 @@ public class Login {
             JOptionPane.showMessageDialog(null, loginStatus);
             run();
         }
-        return loginStatus;
+    return loginStatus;
     }
-    
 }
 
         
