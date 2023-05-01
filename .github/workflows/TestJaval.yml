@@ -30,8 +30,8 @@ jobs:
         run: ls
      # Compiles classes to test 
       - name: compile classes
-        working-directory: ./src/progpoetaskone
-        run: javac -cp "../../testresources/junit-platform-console-standalone-1.8.2.jar" ./progpoetaskone/src/Login.java ./progpoetaskone/src/Registration.java "../../test/progpoetaskone/LoginTest.java"  "../../test/progpoetaskone/RegistrationTest.java" 
+        working-directory: ./src
+        run: javac -cp "../../testresources/junit-platform-console-standalone-1.8.2.jar" ./progpoetaskone/Login.java ./progpoetaskone/Registration.java "../../test/progpoetaskone/LoginTest.java"  "../../test/progpoetaskone/RegistrationTest.java" 
 
     # list contents of src to verify that classess compiled 
       - name: List contents of src directory after compile
