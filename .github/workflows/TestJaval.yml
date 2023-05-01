@@ -47,7 +47,7 @@ jobs:
         #copy compiled tests 
       - name : copy compiled Test classes to testresources directory 
         working-directory: ./test/progpoetaskone
-        run: cp -t  "../../testresources/" Login.class Registration.class
+        run: cp -t  "../../test/progpoetaskone" Login.class Registration.class
         
         # list contents or directory
       - name: List contents test package
@@ -57,4 +57,4 @@ jobs:
         #run tests and output report 
       - name: run tests and create report 
         working-directory: ./test
-        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class LoginTest RegistrationTest  --reports-dir ="reports"
+        run: java  "../../test/progpoetaskone/junit-platform-suite-commons-1.8.2.jar:../../test/progpoetaskone/junit-platform-suite-api-1.8.2.jar:../../test/progpoetaskone/junit-platform-suite-engine-1.8.2:../../test/progpoetaskone/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class LoginTest RegistrationTest  --reports-dir ="reports"
