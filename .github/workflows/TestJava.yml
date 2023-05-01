@@ -1,34 +1,69 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+# This is a basic workflow that is manually triggered
 
-name: Java CI with Gradle
+name: TestJava
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ "master" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ main ]
 
-permissions:
-  contents: read
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
-
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+       # list contents or directory
+      - name: List contents
+        run: ls
+     # Compiles classes to test 
+      - name: compile classes
+        working-directory: ./src
+        run: javac -cp "../testresources/junit-platform-console-standalone-1.6.0(1)" ./progpoetaskone/Login.java ./progpoetaskone/Registration.java "../test/progpoetaskone/LoginTest.java"  "../test/progpoetaskone/RegistrationTest.java" 
+
+    # list contents of src to verify that classess compiled 
+      - name: List contents of src directory after compile
+        working-directory: ./src/progpoetaskone
+        run: ls
+        
+        
+       # copy compiled classes to test directory 
+      - name : copy compiled classes to testresources directory 
+        working-directory: ./src/progpoetaskone
+        run: cp -t  "../../test/progpoetaskone" Login.class Registration.class
+        
+        #copy compiled tests 
+      - name : copy compiled Test classes to testresources directory 
+        working-directory: ./test/progpoetaskone
+        run: cp -t  "../../testresources/" LoginTest.class RegistrationTest.class
+        
+        # list contents or directory
+      - name: List contents test package
+        working-directory: ./test/progpoetaskone
+        run: ls
+        
+        #run Login Class tests and output report 
+      - name: run Login Class tests and create report 
+        working-directory: ./test
+        run: |
+         ls
+         java -jar  "../testresources/junit-platform-console-standalone-1.6.0(1)" -cp "." --select-class  progpoetaskone.LoginTest  
+        
+       #run Task Class tests and output report 
+      - name: run Task Class  tests and create report 
+        working-directory: ./test
+        run: |
+         ls
+         java -jar  "../testresources/junit-platform-console-standalone-1.6.0(1)" -cp "." --select-class  progpoetaskone.RegistrationTest  
