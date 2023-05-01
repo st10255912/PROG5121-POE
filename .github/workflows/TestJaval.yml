@@ -57,9 +57,9 @@ jobs:
         #run Login tests and output report 
       - name: run Login tests and create report 
         working-directory: ./test
-        run: java  "testresources/junit-platform-console-standalone-1.6.0(1).jar" -cp "./progpoetaskone" --select-class progpoetaskone.LoginTest  --reports-dir ="reports"
+        run: java  "./testresources/junit-platform-console-standalone-1.6.0(1).jar" -cp "./progpoetaskone" --select-class progpoetaskone.LoginTest  --reports-dir ="reports"
         
          #run Registration tests and output report 
       - name: run Registration tests and create report 
         working-directory: ./test
-        run: java  "testresources/junit-platform-console-standalone-1.6.0(1).jar" -cp "./progpoetaskone" --select-class progpoetaskone.RegistrationTest  --reports-dir ="reports"
+        run: java  "./testresources/junit-platform-console-standalone-1.6.0(1).jar" -cp "./progpoetaskone" --select-class progpoetaskone.RegistrationTest  --reports-dir ="reports"
