@@ -31,7 +31,7 @@ jobs:
      # Compiles classes to test 
       - name: compile classes
         working-directory: ./src/progpoetaskone
-        run: javac -cp "../../testresources/junit-platform-console-standalone-1.8.2.jar" ./progpoetaskone/Main.java ./progpoetaskone/Login.java ./progpoetaskone/Registration.java ./progpoetaskone/UserDatabase.java "../../test/progpoetaskone/Login.java"  "../../test/progpoetaskone/RegistrationTest.java" 
+        run: javac -cp "../../testresources/junit-platform-console-standalone-1.8.2.jar" ./progpoetaskone/Login.java ./progpoetaskone/Registration.java "../../test/progpoetaskone/LoginTest.java"  "../../test/progpoetaskone/RegistrationTest.java" 
 
     # list contents of src to verify that classess compiled 
       - name: List contents of src directory after compile
@@ -42,12 +42,12 @@ jobs:
        # copy compiled classes to test directory 
       - name : copy compiled classes to testresources directory 
         working-directory: ./src/progpoetaskone
-        run: cp -t  "../../test/progpoetaskone" ./progpoetaskone/Main.java ./progpoetaskone/Login.java Login.class ./progpoetaskone/Registration.java ./progpoetaskone/UserDatabase.java
+        run: cp -t  "../../test/progpoetaskone" Login.class Registration.class
         
         #copy compiled tests 
       - name : copy compiled Test classes to testresources directory 
         working-directory: ./test/progpoetaskone
-        run: cp -t  "../../testresources/" ./progpoetaskone/Main.java ./progpoetaskone/Login.java Login.class ./progpoetaskone/Registration.java ./progpoetaskone/UserDatabase.java 
+        run: cp -t  "../../testresources/" Login.class Registration.class
         
         # list contents or directory
       - name: List contents test package
@@ -57,4 +57,4 @@ jobs:
         #run tests and output report 
       - name: run tests and create report 
         working-directory: ./test
-        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class TaskTest  --reports-dir ="reports"
+        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class LoginTest RegistrationTest  --reports-dir ="reports"
