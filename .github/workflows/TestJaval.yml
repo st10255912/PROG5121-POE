@@ -54,7 +54,12 @@ jobs:
         working-directory: ./test/progpoetaskone
         run: ls
         
-        #run tests and output report 
-      - name: run tests and create report 
+        #run Login tests and output report 
+      - name: run Login tests and create report 
         working-directory: ./test
-        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class LoginTest RegistrationTest  --reports-dir ="reports"
+        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class progpoetaskone.LoginTest  --reports-dir ="reports"
+        
+         #run Registration tests and output report 
+      - name: run Registration tests and create report 
+        working-directory: ./test
+        run: java  "../testresources/junit-platform-suite-commons-1.8.2.jar:../testresources/junit-platform-suite-api-1.8.2.jar:../testresources/junit-platform-suite-engine-1.8.2:../testresources/juniorg.junit.platform.console.ConsoleLauncher " -cp "./progpoetaskone" --select-class progpoetaskone.RegistrationTest  --reports-dir ="reports"
