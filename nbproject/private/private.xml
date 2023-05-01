@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/caleb/OneDrive/Documents/NetBeansProjects/ProgPOETaskOne/src/progpoetaskone/Main.java</file>
+            <file>file:/C:/Users/caleb/OneDrive/Documents/NetBeansProjects/ProgPOETaskOne/test/progpoetaskone/RegistrationTest.java</file>
             <file>file:/C:/Users/caleb/OneDrive/Documents/NetBeansProjects/ProgPOETaskOne/src/progpoetaskone/Registration.java</file>
             <file>file:/C:/Users/caleb/OneDrive/Documents/NetBeansProjects/ProgPOETaskOne/src/progpoetaskone/Login.java</file>
+            <file>file:/C:/Users/caleb/OneDrive/Documents/NetBeansProjects/ProgPOETaskOne/test/progpoetaskone/LoginTest.java</file>
         </group>
     </open-files>
 </project-private>
