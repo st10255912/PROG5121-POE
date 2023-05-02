@@ -1,10 +1,8 @@
-
-
 package progpoetaskone;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 public class Registration {
     
@@ -31,7 +29,7 @@ public class Registration {
         } catch (IOException e) {
             
             //This lets the user know that there was a problem registering their profile.
-            JOptionPane.showMessageDialog(null,"An error occurred while registering your profile");
+            System.out.println("An error occurred while registering your profile");
             
             //The system will then close as a safety feature.
             System.exit(0);
@@ -43,33 +41,34 @@ public class Registration {
     public static void housekeeping() {
         
         //Displays a message to let the user know that the registration process has begun.
-        JOptionPane.showMessageDialog(null, "Welcome to PROG5121 Task 1 (ST10255912)\n=======================================\nPlease follow the prompts to register a new account!");                
+        System.out.println( "Welcome to PROG5121 Task 1 (ST10255912)\n=======================================\nPlease follow the prompts to register a new account!");                
     }
     
     public static String getUsername() {
         
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Username must be:\n-No longer than 5 characters and,\n-Must contain an underscore (_)\n\nEnter Username: ");
+        String username = kb.next();
         //Prompts the user for a username, also giving them the needed requirements.
-        String username = JOptionPane.showInputDialog(null, "Username must be:\n-No longer than 5 characters and,\n-Must contain an underscore (_)\n\n\nEnter Username:");
-
         while(!checkUsername(username) || username.isEmpty()) {
             
             //This displays a message to let the user know that the username that they entered isnt valid.
-            JOptionPane.showMessageDialog(null, "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)");
+            System.out.println( "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)");
             
             //Then the user will be made to restart the username creation process.
             return getUsername();
         }
         
         //Lets the user know that their password has been successfully captured.
-        JOptionPane.showMessageDialog(null,"Username is correctly formatted!....\n\nUsername successfully captured!");
+        System.out.println("Username is correctly formatted!....\n\nUsername successfully captured!");
         return username;
     }
     
     public static boolean checkUsername(String username) {
-        
-        //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
-        if(username == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+        int exit = 3;
+        //This checks if 3 was entered as an exit option.
+        if(username.equals(exit)) {
+            System.out.println("Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -91,30 +90,32 @@ public class Registration {
     }
     
     public static String getPassword() {
-        
         //Prompts the user for a password, also giving them the needed requirements.
-        String password = JOptionPane.showInputDialog(null, "Please ensure that the password contains:\n -At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.\n\n\n Enter password:\n");
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Please ensure that the password contains:\n -At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.\n\n\n Enter password:\n");
+        String password = kb.next();
+        
         
         //Checks if the password has passed the requirements.
         while(!checkPasswordComplexity(password) || password.isEmpty()) {
             
             //This displays a message to let the user know that the password that they entered isnt valid.
-            JOptionPane.showMessageDialog(null,"Invalid password.\nPlease enter a password that contains the following:\n-At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.");
+            System.out.println("Invalid password.\nPlease enter a password that contains the following:\n-At least 8 characters long.\n-At least one uppercase letter.\n-At least one lowercase letter.\n-At least one digit.\n-At least 1 special character.");
             
             //Then the user will be made to restart the password creation process.
             return getPassword();
         }
         
         //Lets the user know that their password has been successfully captured.
-        JOptionPane.showMessageDialog(null,"Password meets complexity requirements!....\n\nPassword successfully captured!");
+        System.out.println("Password meets complexity requirements!....\n\nPassword successfully captured!");
         return password;
     }
     
     public static boolean checkPasswordComplexity(String password) {
-        
+        int exit = 3;
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
-        if(password == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+        if(password.equals(exit)) {
+            System.out.println("Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -160,13 +161,15 @@ public class Registration {
     }
     
     public static String getFirstName() {
-        
+        int exit = 3;
         //prompts the user for thier last name.
-        String firstName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Enter Your First Name: ");
+        String firstName = kb.next();
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
-        if(firstName == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+        if(firstName.equals(exit)) {
+            System.out.println("Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -174,7 +177,7 @@ public class Registration {
         while(!checkFirstName(firstName)){
             
             //Outputs a message to let the user know that thier last name wasnt captured.
-            JOptionPane.showMessageDialog(null,"It looks like you left the previous option empty. Please Enter your first name again.");
+            System.out.println("It looks like you left the previous option empty. Please Enter your first name again.");
             
             //takes the user back to start the method again.
             return getFirstName();
@@ -193,13 +196,15 @@ public class Registration {
     }
 
     public static String getLastName() {
-        
+        int exit = 3;
         //prompts the user for thier last name.
-        String lastName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Enter Your Last Name: ");
+        String lastName = kb.next();
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
-        if(lastName == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using this program. Bye!");
+        if(lastName.equals(exit)) {
+            System.out.println("Thank you for using this program. Bye!");
             System.exit(0);
         }
         
@@ -207,7 +212,7 @@ public class Registration {
         while(!checkFirstName(lastName)){
             
             //Outputs a message to let the user know that thier last name wasnt captured.
-            JOptionPane.showMessageDialog(null,"It looks like you left the previous option empty. Please Enter your last name again.");
+            System.out.println("It looks like you left the previous option empty. Please Enter your last name again.");
             
             //takes the user back to start the method again.
             return getLastName();
@@ -228,10 +233,14 @@ public class Registration {
     public static void registerUser(String username, String password, String firstName, String lastName) {
         
         //Outputs the users profile info.
-        JOptionPane.showMessageDialog(null, "Your Profile: \n\nUsername:..... " + username + "\nPassword:..... " + password + "\nFirst Name:... " + firstName + "\nLast Name:.... " + lastName + "\n\nRegistration Successful!\n=======================================");                       
+        System.out.println( "Your Profile: \n\nUsername:..... " + username + "\nPassword:..... " + password + "\nFirst Name:... " + firstName + "\nLast Name:.... " + lastName + "\n\nRegistration Successful!\n=======================================");                       
     }
 }
 
+/*
+Java – Write to File. Webpage can be found at: https://www.baeldung.com/java-write-to-file
+Java Program to Check Whether the String Consists of Special Characters. Webpage can be found at: https://www.geeksforgeeks.org/java-program-to-check-whether-the-string-consists-of-special-characters/
+*/
 
 
 

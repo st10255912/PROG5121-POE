@@ -1,7 +1,5 @@
-
 package progpoetaskone;
 
-import org.junit.*;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,3 +46,4 @@ public class LoginTest {
         assertTrue(Login.loginUser(validUsername, validPassword));
     }
 }
+//Junit Assert & AssertEquals with Example. Webpage can be found at: https://www.guru99.com/junit-assert.html

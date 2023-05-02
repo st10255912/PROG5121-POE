@@ -1,14 +1,9 @@
-
-
 package progpoetaskone;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javax.swing.JOptionPane;
-
-
-
+import java.util.Scanner;
 
 public class Login {
     
@@ -27,23 +22,24 @@ public class Login {
     public static void housekeeping() {
         
         //Displays a message to let the user know that the registration process has begun.
-        JOptionPane.showMessageDialog(null, "Login Page\n======================================\nPlease follow the prompts to login!");                                                                   
+        System.out.println( "Login Page\n======================================\nPlease follow the prompts to login!");                                                                   
     }
     
     public static String getLoginUsername() {
-        
         //Prompts the user for a username.
-        String loginUsername = JOptionPane.showInputDialog(null, "Enter Username: ");
-        
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Enter Username: ");
+        String loginUsername = kb.next();
+                
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(loginUsername == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using the program. Bye!");
+            System.out.println("Thank you for using the program. Bye!");
             System.exit(0);
         }
         
         //If nothing was entered then the user will be prompted to try again.
         if(loginUsername.isEmpty()) {
-            JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
+            System.out.println("Invalid choice! Try Again.");
             getLoginUsername();
         }
         
@@ -54,17 +50,19 @@ public class Login {
     public static String getLoginPassword() {
         
         //Prompts the user for a password.
-        String loginPassword = JOptionPane.showInputDialog(null, "Enter Password: ");
+        Scanner kb = new Scanner(System.in);
+        System.out.println("Enter Password: ");
+        String loginPassword = kb.next();
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(loginPassword == null) {
-            JOptionPane.showMessageDialog(null,"Thank you for using the program. Bye!");
+            System.out.println("Thank you for using the program. Bye!");
             System.exit(0);
         }
         
         //If nothing was entered then the user will be prompted to try again.
         if(loginPassword.isEmpty()) {
-            JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
+            System.out.println("Invalid choice! Try Again.");
             getLoginPassword();
         }
         
@@ -206,7 +204,7 @@ public class Login {
             
             //If the username and password match what is stored then the output will be:
             loginStatus = "Successful Login!\nWelcome " + loginFirstName + " " + loginLastName;
-            JOptionPane.showMessageDialog(null, loginStatus);
+            System.out.println( loginStatus);
             
             //Then the program will close. ***NOTE*** This will later be used to open their previous kanban board.
             System.exit(0);
@@ -214,7 +212,7 @@ public class Login {
             
             //If the username and password does not match what is stored then the output will be:
             loginStatus = "Unsuccessful Login!\nUsername or Password may be incorrect!\nTry Again.";
-            JOptionPane.showMessageDialog(null, loginStatus);
+            System.out.println( loginStatus);
             
             //The user will then be returned to the beginning of the login process to try again.
             run();
@@ -222,6 +220,10 @@ public class Login {
     return loginStatus;
     }
 }
+
+//Reading a plain text file in Java. Webpage can be found at: https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java    
+    
+
 
         
     

@@ -1,6 +1,6 @@
 package progpoetaskone;
 
-import org.junit.*;
+import java.io.ByteArrayInputStream;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,27 +38,30 @@ public class RegistrationTest {
         System.out.println("Method Testing complete!");
     }
 
-//    @Test
-//    public void testGetUsername() {
-//        System.out.println("Testing output for an invalid username...");
-//        String expResult = "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)";
-//        
-//        String result = Registration.getUsername();
-//        
-//        System.out.println(result);
-//        
-//        assertEquals(expResult, result);
-//        
-//        
-//        System.out.println("Testing output for a valid username...");
-//        expResult = "kyl_1";
-//        
-//        result = Registration.getUsername();
-//        
-//        System.out.println(result);
-//        
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    public void testGetUsername() {
+        System.out.println("Testing output for an invalid username...");
+        String expResult = "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)";
+        String input = "kyle!!!!!!!";
+        String result = Registration.getUsername();
+        
+        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        
+        System.out.println(result);
+        
+        assertEquals(expResult, result);
+        
+        
+        System.out.println("Testing output for a valid username...");
+        expResult = "kyl_1";
+        
+        result = Registration.getUsername();
+        
+        System.out.println(result);
+        
+        assertEquals(expResult, result);
+    }
 
     @Test
     public void testCheckUserName() {
@@ -71,29 +74,29 @@ public class RegistrationTest {
         assertTrue(Registration.checkUsername(validUsername));
     }
         
-//    @Test
-//    public void testGetPassword() {
-//        System.out.println("Testing output for an invalid username...");
-//        String expResult = "password";
-//        
-//        String result = Registration.getPassword();
-//        
-//        System.out.println(expResult);
-//        System.out.println(result);
-//        
-//        assertEquals(expResult, result);
-//        
-//        
-//        System.out.println("Testing output for a valid username...");
-//        expResult = "Ch&&sec@ke99!";
-//        
-//        result = Registration.getPassword();
-//        
-//        System.out.println(expResult);
-//        System.out.println(result);
-//        
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    public void testGetPassword() {
+        System.out.println("Testing output for an invalid username...");
+        String expResult = "password";
+        
+        String result = Registration.getPassword();
+        
+        System.out.println(expResult);
+        System.out.println(result);
+        
+        assertEquals(expResult, result);
+        
+        
+        System.out.println("Testing output for a valid username...");
+        expResult = "Ch&&sec@ke99!";
+        
+        result = Registration.getPassword();
+        
+        System.out.println(expResult);
+        System.out.println(result);
+        
+        assertEquals(expResult, result);
+    }
     
     @Test
     public void testCheckPasswordComplexity() {
@@ -106,3 +109,5 @@ public class RegistrationTest {
         assertTrue(Registration.checkPasswordComplexity(validPassword));
     }
 }
+
+//Junit Assert & AssertEquals with Example. Webpage can be found at: https://www.guru99.com/junit-assert.html

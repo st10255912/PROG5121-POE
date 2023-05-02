@@ -1,8 +1,6 @@
-
-
 package progpoetaskone;
 
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 
 public class Main {
@@ -17,23 +15,14 @@ public class Main {
         
         //While loop used so that users can continuosly register and login until exited.
         while(true){
-            
+            Scanner kb = new Scanner(System.in);
             //Prompts user to select one of three options.
-            String choice = (JOptionPane.showInputDialog(null, "1: Register \n2: Login \nEsc: Exit \n\nEnter your choice: "));
-           
-            /*if / if else used to make the program nicer to use.
-            This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.*/
-            if(choice == null) {
-                JOptionPane.showMessageDialog(null,"Thank you for using this program!\n==============================");
-                                                                  
-                                                                
-                                                                             
-                System.exit(0);
-            }
+            System.out.println( "1: Register \n2: Login \n3: Exit \n\nEnter your choice: ");
+            String choice = kb.next();
             
             //This checks if nothing was entered, if nothing was entered then the user will be prompted to try again.
-            else if(choice.trim().equals("")){
-                JOptionPane.showMessageDialog(null,"Invalid choice!\nPress 'Esc' to exit.");
+            if(choice.trim().equals("")){
+                System.out.println("Invalid choice!\nPress 'Esc' to exit.");
                 UserSelection();
                 break;
             }
@@ -54,10 +43,15 @@ public class Main {
                     Login login = new Login();
                     login.run();
                     break;
+                case 3:
+                    
+                    //Option for Exit
+                    System.out.println("Thank you for using this program. Bye!");
+                    System.exit(0);
                 default:
                     
                     //If anything other than nothing, null, 1 or 2 is entered
-                    JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
+                    System.out.println("Invalid choice! Try Again.");
                     break;
             }
         }
