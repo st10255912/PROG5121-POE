@@ -1,16 +1,20 @@
 package progpoetaskone;
 
+import org.junit.*;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class RegistrationTest {
     
+    Registration registration = new Registration();
+
     public RegistrationTest() {
     }
     
@@ -35,18 +39,23 @@ public class RegistrationTest {
     }
 
 //    @Test
-//    public void testInvalidGetUsername() {
+//    public void testGetUsername() {
 //        System.out.println("Testing output for an invalid username...");
-//        String expResult = "kyle!!!!!!!";
+//        String expResult = "Invalid Username. \nUsername must be no longer than 5 characters and must contain an underscore (_)";
+//        
 //        String result = Registration.getUsername();
+//        
+//        System.out.println(result);
+//        
 //        assertEquals(expResult, result);
-//    }
-//    
-//    @Test
-//    public void testValidGetUsername() {    
+//        
+//        
 //        System.out.println("Testing output for a valid username...");
-//        String expResult = "kyl_1";
-//        String result = Registration.getUsername();
+//        expResult = "kyl_1";
+//        
+//        result = Registration.getUsername();
+//        
+//        System.out.println(result);
 //        
 //        assertEquals(expResult, result);
 //    }
@@ -61,24 +70,31 @@ public class RegistrationTest {
         String validUsername = "kyl_1";
         assertTrue(Registration.checkUsername(validUsername));
     }
-
+        
 //    @Test
-//    public void testInvalidGetPassword() {
-//        System.out.println("Testing output for an invalid password...");
-//        String expOutput = "password";
-//        String actualOutput = Registration.getPassword();
-//        assertEquals(expOutput, actualOutput);
-//    }   
+//    public void testGetPassword() {
+//        System.out.println("Testing output for an invalid username...");
+//        String expResult = "password";
 //        
-//    @Test
-//    public void testValidGetPassword() { 
-//        System.out.println("Testing output for a valid password...");
-//        String expOutput = "Ch&&sec@ke99!";
-//        String actualOutput = Registration.getPassword();
-//        assertEquals(expOutput, actualOutput);
-//
+//        String result = Registration.getPassword();
+//        
+//        System.out.println(expResult);
+//        System.out.println(result);
+//        
+//        assertEquals(expResult, result);
+//        
+//        
+//        System.out.println("Testing output for a valid username...");
+//        expResult = "Ch&&sec@ke99!";
+//        
+//        result = Registration.getPassword();
+//        
+//        System.out.println(expResult);
+//        System.out.println(result);
+//        
+//        assertEquals(expResult, result);
 //    }
-
+    
     @Test
     public void testCheckPasswordComplexity() {
         System.out.println("Testing an invalid password...");

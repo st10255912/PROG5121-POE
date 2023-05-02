@@ -1,6 +1,7 @@
 
 package progpoetaskone;
 
+import org.junit.*;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
