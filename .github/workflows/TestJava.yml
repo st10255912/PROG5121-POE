@@ -54,6 +54,11 @@ jobs:
         working-directory: ./test/progpoetaskone
         run: ls
         
+        # Set CLASSPATH to include JUnit jar file
+      - name: Set CLASSPATH
+        run: export CLASSPATH=$CLASSPATH:../testresources/junit-platform-console-standalone-1.6.0.jar
+
+        
         # run Login Class tests and output report 
       - name: run Login Class tests and create report 
         working-directory: ./test
