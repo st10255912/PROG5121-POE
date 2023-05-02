@@ -31,7 +31,7 @@ jobs:
      # Compiles classes to test 
       - name: compile classes
         working-directory: ./src
-        run: javac -cp "../testresources/junit-platform-console-standalone-1.6.0(1)" ./progpoetaskone/Login.java ./progpoetaskone/Registration.java "../test/progpoetaskone/LoginTest.java"  "../test/progpoetaskone/RegistrationTest.java" 
+        run: javac -cp "../testresources/junit-platform-console-standalone-1.6.0(1);path/to/junit.jar" ./progpoetaskone/Login.java ./progpoetaskone/Registration.java "../test/progpoetaskone/LoginTest.java"  "../test/progpoetaskone/RegistrationTest.java" 
 
     # list contents of src to verify that classess compiled 
       - name: List contents of src directory after compile
@@ -54,16 +54,17 @@ jobs:
         working-directory: ./test/progpoetaskone
         run: ls
         
-        #run Login Class tests and output report 
+        # run Login Class tests and output report 
       - name: run Login Class tests and create report 
         working-directory: ./test
         run: |
-         ls
-         java -jar  "../testresources/junit-platform-console-standalone-1.6.0(1)" -cp "." --select-class  progpoetaskone.LoginTest  
-        
-       #run Task Class tests and output report 
+          ls
+          java -cp ".;../testresources/junit-platform-console-standalone-1.6.0(1);path/to/junit.jar" org.junit.platform.console.ConsoleLauncher --select-class progpoetaskone.LoginTest
+
+      # run Task Class tests and output report 
       - name: run Task Class  tests and create report 
         working-directory: ./test
         run: |
-         ls
-         java -jar  "../testresources/junit-platform-console-standalone-1.6.0(1)" -cp "." --select-class  progpoetaskone.RegistrationTest  
+          ls
+          java -cp ".;../testresources/junit-platform-console-standalone-1.6.0(1);path/to/junit.jar" org.junit.platform.console.ConsoleLauncher --select-class progpoetaskone.RegistrationTest
+
