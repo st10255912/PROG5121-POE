@@ -1,9 +1,14 @@
+
+
 package progpoetaskone;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
+
+
+
 
 public class Login {
     
@@ -22,24 +27,23 @@ public class Login {
     public static void housekeeping() {
         
         //Displays a message to let the user know that the registration process has begun.
-        System.out.println( "Login Page\n======================================\nPlease follow the prompts to login!");                                                                   
+        JOptionPane.showMessageDialog(null, "                    Login Page\n=================================\n      Please follow the prompts to login!");                                                                   
     }
     
     public static String getLoginUsername() {
+        
         //Prompts the user for a username.
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Username: ");
-        String loginUsername = kb.next();
-                
+        String loginUsername = JOptionPane.showInputDialog(null, "Enter Username: ");
+        
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(loginUsername == null) {
-            System.out.println("Thank you for using the program. Bye!");
+            JOptionPane.showMessageDialog(null,"Thank you for using the program. Bye!");
             System.exit(0);
         }
         
         //If nothing was entered then the user will be prompted to try again.
         if(loginUsername.isEmpty()) {
-            System.out.println("Invalid choice! Try Again.");
+            JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
             getLoginUsername();
         }
         
@@ -50,19 +54,17 @@ public class Login {
     public static String getLoginPassword() {
         
         //Prompts the user for a password.
-        Scanner kb = new Scanner(System.in);
-        System.out.println("Enter Password: ");
-        String loginPassword = kb.next();
+        String loginPassword = JOptionPane.showInputDialog(null, "Enter Password: ");
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(loginPassword == null) {
-            System.out.println("Thank you for using the program. Bye!");
+            JOptionPane.showMessageDialog(null,"Thank you for using the program. Bye!");
             System.exit(0);
         }
         
         //If nothing was entered then the user will be prompted to try again.
         if(loginPassword.isEmpty()) {
-            System.out.println("Invalid choice! Try Again.");
+            JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
             getLoginPassword();
         }
         
@@ -204,22 +206,52 @@ public class Login {
             
             //If the username and password match what is stored then the output will be:
             loginStatus = "Successful Login!\nWelcome " + loginFirstName + " " + loginLastName;
-            System.out.println( loginStatus);
+            JOptionPane.showMessageDialog(null, loginStatus);
             
             //Then the program will close. ***NOTE*** This will later be used to open their previous kanban board.
-            System.exit(0);
+            Task task = new Task();
+            task.run();
         } else {
             
             //If the username and password does not match what is stored then the output will be:
             loginStatus = "Unsuccessful Login!\nUsername or Password may be incorrect!\nTry Again.";
-            System.out.println( loginStatus);
+            JOptionPane.showMessageDialog(null, loginStatus);
             
-            //The user will then be returned to the beginning of the login process to try again.
-            run();
+            String failOption = JOptionPane.showInputDialog(null, "Please choose one of the following options: \n1. Return to main menu \n\n2. Retry Login");
+            
+            if(failOption == null) {
+                JOptionPane.showMessageDialog(null,"Thank you for using this program!\n==============================");                                                        
+                System.exit(0);
+            }else if(failOption.trim().equals("")){
+                JOptionPane.showMessageDialog(null,"Invalid choice!\nPress 'Esc' to exit.");
+                run();
+                
+            }
+            
+            int failOptionChoice = Integer.parseInt(failOption);
+            
+            switch(failOptionChoice) {
+                    case 1:
+                        Main main = new Main();
+                        main.userSelection();
+                        break;
+                    case 2:
+                        //The user will then be returned to the beginning of the login process to try again.
+                        run();
+                        break;
+                    default:
+                        //If anything other than nothing, null, 1 or 2 is entered
+                        JOptionPane.showMessageDialog(null,"Invalid choice! Try Again.");
+                        break;
+            }  
         }
     return loginStatus;
     }
 }
+
+        
+    
+
 
 //Reading a plain text file in Java. Webpage can be found at: https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java    
     
