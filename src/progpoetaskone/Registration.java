@@ -195,7 +195,7 @@ public class Registration {
     public static String getLastName() {
         
         //prompts the user for thier last name.
-        String lastName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
+        String lastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(lastName == null) {
