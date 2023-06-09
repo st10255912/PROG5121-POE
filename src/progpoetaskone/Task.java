@@ -34,7 +34,7 @@ public class Task {
                 addTask();
                 break;
             case 2:
-                report();
+                JOptionPane.showMessageDialog(null, "Coming Soon");
                 break;
             case 3:
                 JOptionPane.showMessageDialog(null, "Thank you for using this program!\n==============================");
