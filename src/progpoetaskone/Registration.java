@@ -1,5 +1,7 @@
 
 
+
+
 package progpoetaskone;
 
 import java.io.FileWriter;
@@ -195,7 +197,7 @@ public class Registration {
     public static String getLastName() {
         
         //prompts the user for thier last name.
-        String lastName = JOptionPane.showInputDialog(null,"Enter Your Last Name: ");
+        String lastName = JOptionPane.showInputDialog(null,"Enter Your First Name: ");
         
         //This checks if null was returned (for example if they press esc or the 'x' in the top right corner) then closed the program as an exit option.
         if(lastName == null) {
@@ -239,6 +241,11 @@ public class Registration {
 Java – Write to File. Webpage can be found at: https://www.baeldung.com/java-write-to-file
 Java Program to Check Whether the String Consists of Special Characters. Webpage can be found at: https://www.geeksforgeeks.org/java-program-to-check-whether-the-string-consists-of-special-characters/
 */
+
+
+
+
+
 
 
 

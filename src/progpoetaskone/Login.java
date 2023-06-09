@@ -1,5 +1,3 @@
-
-
 package progpoetaskone;
 
 import java.io.BufferedReader;
@@ -248,15 +246,3 @@ public class Login {
     return loginStatus;
     }
 }
-
-        
-    
-
-
-//Reading a plain text file in Java. Webpage can be found at: https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java    
-    
-
-
-        
-    
-

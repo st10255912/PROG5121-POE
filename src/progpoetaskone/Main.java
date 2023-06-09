@@ -1,5 +1,3 @@
-
-
 package progpoetaskone;
 
 import javax.swing.JOptionPane;

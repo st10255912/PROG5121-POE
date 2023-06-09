@@ -1,59 +1,48 @@
 
 package progpoetaskone;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
+
 public class Task {
-    /*
-    Initializes the totalDuration variable which will keep track of the total hrs of all the added tasks created while the program is running
-    Initializes the hashmap for the taskNumbersByDeveloper variable.
-    */
-    private static int totalDuration = 0;
-    private static Map<String, AtomicInteger> taskNumbersByDeveloper = new HashMap<>();
-
+    ArrayList <String> developer = new ArrayList <String> ();
+    ArrayList <String> taskNames = new ArrayList <String> ();
+    ArrayList <String> taskID = new ArrayList <String> ();
+    ArrayList <Integer> taskDuration = new ArrayList <Integer> ();
+    ArrayList <String> taskStatus = new ArrayList <String> ();
+    ArrayList <String> taskDescription = new ArrayList <String> ();
+    ArrayList <String> tasks = new ArrayList <String> ();
+   
+    public static int totalHours = 0;
+    public static int taskNumber = 0;
+    public static int index = 0;
+    
     public static void run() {
-        /*
-        Displays an intro message
-        Opens the task_numbers.txt file (which closes when the program closes)
-            Doing this saves memory because instead of having to open and close the file to add each detail, it just opens it at the beginning and closes it at the end.
-        Calls the menu() method so the user can choose how to proceed
-        */
         JOptionPane.showMessageDialog(null, "Welcome to EasyKhanban");
-        loadTaskNumbers();
-        menu();
+        Task task = new Task();
+        task.menu();
     }
-
-    public static void menu() {
-        /*
-        This is the menu from which the user will choose to either add a task, show a report or exit.
-            If they choose to add a task then the addTask() method will run
-            If they choose to show report then "Coming soon" will be displayed
-            If they choose to exit then the program will close after a goodbye message is displayed
-            If they choose something out of scope then the program will reprompt then after displaying an error message.
-        */
-        String[] options = {"Option 1) Add Task", "Option 2) Show Report", "Option 3) Exit"};
-        int selections = JOptionPane.showOptionDialog(null, "Choose an option:", "Numeric Menu",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+    
+    public void menu() {
+        
+        int selections = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter your choice:\n\nOption 1) Add Tasks\nOption 2) Show Report\nOption 3) Quit"));
 
         switch (selections) {
-            case 0:
-                addTask();
-                JOptionPane.showMessageDialog(null, "Total hours: \n" + returnTotalHours());
-                break;
             case 1:
-                JOptionPane.showMessageDialog(null, "Coming Soon");
+                addTask();
                 break;
             case 2:
+                report();
+                break;
+            case 3:
                 JOptionPane.showMessageDialog(null, "Thank you for using this program!\n==============================");
+                int sum = 0;
+                for (int i = 0; i < taskDuration.size(); i++) {
+                    sum += taskDuration.get(i);
+                }
+                JOptionPane.showMessageDialog(null, "The Total number of hours of all tasks is: " + sum);
                 System.exit(0);
             default:
                 JOptionPane.showMessageDialog(null, "Invalid Input, Please try again.");
@@ -61,271 +50,291 @@ public class Task {
         }
         menu();
     }
-
-    public static void addTask() {
-        /*
-        Opens the file tasks.txt and writes the task to that file while the task is being created
-        If the task creation is not complete then it will not be saved to the file.
-        */
-        int numOfTasks = getNumOfTasks();
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt", true))) {
-            for (int taskNumber = 0; taskNumber < numOfTasks; taskNumber++) {
-                Tasks task = createTask();
-                totalDuration += task.getTaskDuration();
-                saveTaskToFile(writer, task);
-                printTaskDetails(task);
-            }
-
-            saveTaskNumbers();
-        } catch (IOException e) {
-            e.printStackTrace();
+    
+    public void addTask() {
+        int taskAmt = getNumberOfTasks();
+        for (int i = 1; i <= taskAmt; i++) { 
+            getTaskStatus();
+            getDevName();
+            getTaskName();
+            getTaskDescription();
+            getTaskDuration();
+            createTaskID();
+            JOptionPane.showMessageDialog(null,printTaskDetails());
+            JOptionPane.showMessageDialog(null, "Task successfully captured!");
+            index = index++;
+            taskNumber = taskNumber + 1;    
         }
+        
+        JOptionPane.showMessageDialog(null, "The Total number of hours between \nall the newly added tasks is : " + totalHours);
+        totalHours = 0;
     }
-
-    public static Tasks createTask() {
-        //Calls all the methods involved with creating the task.
-        String taskStatus = getTaskStatus();
-        String devName = getDevName();
-        String taskName = getTaskName();
-        String taskDescription = getTaskDescription();
-        int taskDuration = getTaskDuration();
-        String taskId = createTaskID(devName, taskName, getTaskNumberForDeveloper(devName));
-
-        return new Tasks(taskStatus, devName, taskName, taskDescription, taskDuration, taskId);
-    }
-
-    public static void saveTaskToFile(BufferedWriter writer, Tasks task) throws IOException {
-        /*
-        Saves the task details to the tasks.txt file
-        This will be useful later on to search through when trying to find a certain task.
-        */
-        String taskDetails = task.getTaskStatus() + ";" + task.getDevName() + ";" + task.getTaskName() + ";"
-                + task.getTaskDescription() + ";" + task.getTaskDuration() + ";" + task.getTaskId();
-        writer.write(taskDetails);
-        writer.newLine();
-    }
-
-    public static void printTaskDetails(Tasks task) {
-        //Prints out the task details after each task has been created.
-        String taskDetails = "**Task Status**\n" + task.getTaskStatus() +
-             "\n\n**Developer Name**\n" + task.getDevName() +
-             "\n\n**Task Name**\n" + task.getTaskName() +
-             "\n\n**Task Description**\n" + task.getTaskDescription() +
-             "\n\n**Task Duration**\n" + task.getTaskDuration() +
-             "\n\n**Task ID**\n" + task.getTaskId();
-
-
-        JOptionPane.showMessageDialog(null, taskDetails.toString());
-    }
-
-    public static int getNumOfTasks() {
-        /*
-        Initializes the numOfTasks variable
-        Prompts the user to enter the number of tasks they would like to assign.
-        Catches any errors and reprompts the user to enter a valid number of tasks to assign.
-        */
-        int numOfTasks = 0;
-        try {
-            numOfTasks = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of tasks you would like to assign: "));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-            numOfTasks = getNumOfTasks();
-        }
+    
+    public static int getNumberOfTasks() {
+        int numOfTasks = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the number of \ntasks you would like to assign: "));
         return numOfTasks;
     }
+    
+    public String getTaskStatus() {
+        int chosenOption = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n\nOption 1) To Do\nOption 2) Doing\nOption 3) Done"));
 
-    public static String getTaskStatus() {
-        /*
-        Creates 3 buttons for the user to choose from for selecting the "To Do", "Doing" or "Done" status
-            A list of the options
-            prompts the user to select an option
-            then sets the taskStatus variable with the appropriate status.
-        */
-        String[] taskOption = {"To Do", "Doing", "Done"};
-        int chosenOption = JOptionPane.showOptionDialog(null, "Choose an option:", "Numeric Menu",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, taskOption, taskOption[0]);
-
-        String taskStatus = "";
+        
         switch (chosenOption) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "To Do Selected");
-                taskStatus = "TO DO";
-                break;
             case 1:
-                JOptionPane.showMessageDialog(null, "Doing Selected");
-                taskStatus = "DOING";
+                taskStatus.add(index, "TO DO");
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null, "Done Selected");
-                taskStatus = "DONE";
+                taskStatus.add(index, "DOING");
+                break;
+            case 3:
+                taskStatus.add(index, "DONE");
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Invalid Input, Please try again.");
-                taskStatus = getTaskStatus();
+                getTaskStatus();
                 break;
         }
-        return taskStatus;
+        return taskStatus.get(index);
     }
-
-    public static String getDevName() {
-        //Prompts the user to enter the developers name.
-        return JOptionPane.showInputDialog(null, "Enter the first and last name of the developer the task will be assigned to: ");
-    }
-
-    public static String getTaskName() {
-        //Prompts the user to enter the name of the task that will be assigned to the developer.
-        return JOptionPane.showInputDialog(null, "Enter the name of the task");
-    }
-
-    public static String getTaskDescription() {
-        /*
-        Prompts the user to enter the description of the task that will be assigned to the developer
-        If the taskDescription is more than 50 characters then it will reprompt the user to enter an appropriate description under 50 characters
-        */
-        String taskDescription = JOptionPane.showInputDialog(null, "Enter a description of the task: ");
-
-        while (taskDescription.length() >= 50) {
-            JOptionPane.showMessageDialog(null, "Description too long, please enter a description less than 50 characters.");
-            taskDescription = getTaskDescription();
+    
+    public String getDevName() {
+        String developerNameInput = JOptionPane.showInputDialog(null, "Please enter the name of the developer \nwho this task will be assigned to: ");
+        if (developerNameInput == null || developerNameInput.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Invalid Input.");
+            getDevName();
         }
-        return taskDescription;
+        developer.add(index,developerNameInput);
+        return developer.get(index);
     }
-
-    public static int getTaskDuration() {
-        /*
-        Initializes the taskDuration
-        Prompts the user to enter the expected time it would take for the assigned dev to complete the task
-        Catches any errors and then prompts the user again.
-        */
-        int taskDuration = 0;
-        try {
-            taskDuration = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of hours the task will take to complete: "));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-            taskDuration = getTaskDuration();
+    
+    public String getTaskName() {
+        String taskNamesInput = JOptionPane.showInputDialog(null, "Please enter the name of the task: ");
+        if (taskNamesInput == null) {
+            JOptionPane.showMessageDialog(null, "Invalid Input.");
+            getTaskName();
         }
-        return taskDuration;
+        taskNames.add(index,taskNamesInput);
+        return taskNames.get(index);
     }
-
-    public static String createTaskID(String devName, String taskName, int taskNumber) {
-        /*
-        For the first part of the TaskID, it takes the task name and task the first three characters of that.
-        For the second part, the task number (which is being kept track of in task_numbers.txt file) is used directly
-        For the third part, it takes the developers name, seperates it by the whitespace, takes the first string after being seperated, then gets the last three characters.
-            For the third part, when it gets the last three characters, it starts from the max length of the first string (their first name) then stops at (the max length - 3).
+    
+    public String getTaskDescription() {
+        String taskDescriptionInput = JOptionPane.showInputDialog(null, "Please enter the description of this task");
+        if (taskDescriptionInput == null) {
+            JOptionPane.showMessageDialog(null, "Invalid Input.");
+            getTaskDescription();
+        }
+        taskDescription.add(index,taskDescriptionInput);
+        return taskDescription.get(index);
+    }
+    
+    public int getTaskDuration() {
+        int taskDurationInput = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the number of hours it \nshould take to complete this task"));
+        taskDuration.add(index,taskDurationInput);
+        returnTotalHours();
+        return taskDuration.get(index);
+    }
+    
+    public static boolean checkTaskDescription(String taskDescription) {
+        while(taskDescription.length() < 50) {
+            return true;
+        }
+        return false;
+    }
+    
+    public String createTaskID() {
+        /*First two letters of the task name: add task --> AD
+        Task number: first task for dev --> 0
+        Last three letters of the devs first name: Robyn Harrison --> BYN
+        AD:0:BYN
         */
-        String taskIdPartOne = taskName.substring(0, 2);
-        String[] words = devName.split("\\s+");
+        String taskIdPartOne = taskNames.get(index);
+        taskIdPartOne = taskIdPartOne.substring(0, 2);
+        String[] words = developer.get(index).split("\\s+");
         String firstWord = words[0];
         String taskIdPartThree = firstWord.substring(Math.max(0, firstWord.length() - 3));
-        return taskIdPartOne.toUpperCase() + ":" + taskNumber + ":" + taskIdPartThree.toUpperCase();
-    }
-
-    public static int returnTotalHours() {
-        //Returns the totalDuration, which is updated after each task has been added.
-        return totalDuration;
+        String taskIDInput = taskIdPartOne.toUpperCase() + ":" + taskNumber + ":" + taskIdPartThree.toUpperCase();
+        taskID.add(index, taskIDInput);
+        return taskID.get(index);
     }
     
-    private static void saveTaskNumbers() {
-        /*
-        Adding the task numbers in the task_numbers.txt file
-            If the dev does not have a task number then their name will be added and their task number will be set to 0 and increment from there.
-            The data will be added as such: 'the developers name':'their task number'. E.g: Caleb Hartslief:1
-            Configuring it using a hashmap.
-        */
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("task_numbers.txt"))) {
-            for (Map.Entry<String, AtomicInteger> entry : taskNumbersByDeveloper.entrySet()) {
-                String devName = entry.getKey();
-                int taskNumber = entry.getValue().get();
-                writer.write(devName + ":" + taskNumber);
-                writer.newLine();
+    public String printTaskDetails() {
+        String taskDetails = "**Task Status**\n" + taskStatus.get(index) +
+             "\n\n**Developer Name**\n" + developer.get(index) +
+             "\n\n**Task Name**\n" + taskNames.get(index) +
+             "\n\n**Task Description**\n" + taskDescription.get(index) +
+             "\n\n**Task Duration**\n" + taskDuration.get(index) +
+             "\n\n**Task ID**\n" + taskID.get(index);
+        
+        tasks.add(index, taskDetails);
+        
+        return taskDetails;
+    }
+    
+    public int returnTotalHours() {
+        totalHours = totalHours + taskDuration.get(index);
+        return totalHours;
+    }
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+//TASK 3 ADDITIONS >>>>>
+
+    public void report() {
+        
+        String reportOption = JOptionPane.showInputDialog(null, "Choose one of the following options: \n\n"
+                                                            + "1. Display all tasks with the status 'done': \n"
+                                                            + "2. Display the task with the longest duration: \n"
+                                                            + "3. Display all tasks: \n"
+                                                            + "4. Search for a task: \n"
+                                                            + "5. Delete a task: \n");
+        
+        if(reportOption == null) {
+                JOptionPane.showMessageDialog(null,"Thank you for using this program!\n==============================");                                                          
+                System.exit(0);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            
+            //This checks if nothing was entered, if nothing was entered then the user will be prompted to try again.
+            else if(reportOption.trim().equals("")){
+                JOptionPane.showMessageDialog(null,"Invalid choice!\nPress 'Esc' to exit.");
+                report();
+                
+            }
+            
+        //Parsing the user input into an integer. It was a string to check for null or nothing but now must be an integer.
+        int chosenOption = Integer.parseInt(reportOption);
+            
+        switch (chosenOption) {
+            case 1:
+                displayAllDone();
+                break;
+            case 2:
+                displayMostHours();
+                break;
+            case 3:
+                displayAll();
+                break;
+            case 4:
+                search();
+                break;
+            case 5:
+                deleteTask();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Invalid Input, Please try again.");
+                report();
+                break;
         }
     }
     
-    private static void loadTaskNumbers() {
-        /*
-        Loading from task_numbers.txt
-            This reads the contents of the .txt file
-            It then seperates the dev's name and their respective last saved task number
-            It then stores it in the data structure taskNumbersByDeveloper :)
-        */
-        try (BufferedReader reader = new BufferedReader(new FileReader("task_numbers.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length == 2) {
-                    String devName = parts[0];
-                    int taskNumber = Integer.parseInt(parts[1]);
-                    taskNumbersByDeveloper.put(devName, new AtomicInteger(taskNumber));
+    public void displayAllDone() {
+        for (int i = 0; i < taskStatus.size(); i++) {
+            if(taskStatus.get(i).equals("Done")) {
+                JOptionPane.showMessageDialog(null, tasks.get(i));
+            }
+        }
+        report();
+    }
+    
+    public void displayMostHours() {
+        int longestTask = 0;
+        for (int i = 0; i < taskDuration.size(); i++) {
+            if(taskDuration.get(i) > longestTask){
+                longestTask = taskDuration.get(i);
+            }
+            for (int j = 0; j < taskNumber; j++) {
+                if(taskDuration.get(j) == longestTask) {
+                    JOptionPane.showMessageDialog(null, "The longest task to complete will be the task named: " + taskNames.get(j));
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            
         }
+        report();
     }
-
     
-
-    public static int getTaskNumberForDeveloper(String devName) {
-        //Using AtomicInteger because its more efficient than using a standard counting setup in this case.
-        AtomicInteger taskNumber = taskNumbersByDeveloper.get(devName);
-        if (taskNumber != null) {
-            return taskNumber.incrementAndGet();
-        } else {
-            taskNumbersByDeveloper.put(devName, new AtomicInteger(0));
-            return 0;
-        }
+    public void displayAll() {
+        for (int i = 0; i < taskNumber; i++) {
+                    JOptionPane.showMessageDialog(null, tasks.get(i));
+                    /*
+                        displays from newest to oldest
+                            needs to be from oldest to newest
+                            needs to be multiple tasks displayed at once
+                    */
+                }
+        report();
     }
-
-    private static class Tasks {
-        //Declaring the private variables
-        private String taskStatus;
-        private String devName;
-        private String taskName;
-        private String taskDescription;
-        private int taskDuration;
-        private String taskId;
+    
+    public void search() {
+        String searchInput = JOptionPane.showInputDialog(null, "Search for a task: \n");
         
-        
-        //Setting 'This' types
-        public Tasks(String taskStatus, String devName, String taskName, String taskDescription,
-                    int taskDuration, String taskId) {
-            this.taskStatus = taskStatus;
-            this.devName = devName;
-            this.taskName = taskName;
-            this.taskDescription = taskDescription;
-            this.taskDuration = taskDuration;
-            this.taskId = taskId;
+        if(searchInput == null) {
+            JOptionPane.showMessageDialog(null,"Thank you for using this program!\n==============================");                                                          
+            System.exit(0);
+        } else if(searchInput.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Invalid choice!\nPress 'Esc' to exit.");
+            search();
         }
         
+        for (int i = 0; i < taskNumber; i++) {
+            System.out.println(searchInput);
+            if(searchInput.equals(taskNames.get(i))) {
+                System.out.println(taskNames.get(i));
+                JOptionPane.showMessageDialog(null, tasks.get(i));
+            }
+        }
         
-        //Getters
-        public String getTaskStatus() {
-            return taskStatus;
-        }
-
-        public String getDevName() {
-            return devName;
-        }
-
-        public String getTaskName() {
-            return taskName;
-        }
-
-        public String getTaskDescription() {
-            return taskDescription;
-        }
-
-        public int getTaskDuration() {
-            return taskDuration;
-        }
-
-        public String getTaskId() {
-            return taskId;
-        }
+        report();
+        
     }
+    
+    public void deleteTask() {
+        String searchInput = JOptionPane.showInputDialog(null, "Search for a task: \n");
+        
+        for (int i = 0; i < taskNumber; i++) {
+            if(searchInput.equals(taskNames.get(i))) {
+                JOptionPane.showMessageDialog(null, taskNames.get(i) + "Has been removed.");
+                tasks.remove(i);
+                
+            }
+        }
+        report();
+    }
+    
+    
+    /*
+        new button? 
+    */
+    
+//    ArrayList <String> developer = new ArrayList <String> ();
+//    ArrayList <String> taskNames = new ArrayList <String> ();
+//    ArrayList <String> taskID = new ArrayList <String> ();
+//    ArrayList <Integer> taskDuration = new ArrayList <Integer> ();
+//    ArrayList <String> taskStatus = new ArrayList <String> ();
+//    ArrayList <String> taskDescription = new ArrayList <String> ();
 }
